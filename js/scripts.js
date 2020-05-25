@@ -218,28 +218,35 @@ $(function() {
     function totalPrice () {
         let price = 0;
         let topping;
-        let costOfSize = $("select#sizeoption option:selected").val();
-        let costOfCheese = $("select#cheeseoption option:selected").val();
-        let costOfSauce = $("select#sauceoption option:selected").val();
+        let costOfSize = $("select#sizeoption").val();
+        let costOfCheese = $("select#cheeseoption").val();
+        let costOfSauce = $("select#sauceoption").val();
         let costofTopping;
         if (costOfSize !== null) {
             price += Number(costOfSize);
             price += Number(costOfCheese);
-            price += Number(costOfSauce );
+            price += Number(costOfSauce);
             let toppingCount = 0;
-            toppingEa = "";
+            let toppingEa = "";
             $("input[name='topping']:checked").each(function() {
                 toppingCount++;
-                toppingEa =  toppingEa + $('this').val() + ", ";
+                toppingEa =  toppingEa + $(this).val() + ", ";
             });
             price += 0.99 * toppingCount;
         }
         window.console.log("total = " + price);
 
-        price = parseInt(costOfSize) + parseInt(costOfCheese) + parseInt(costOfSauce) + costofTopping;
-        
+        $("#ordertotal").text("$ " + price.toFixed(2));
+        $("#ordertotal2").text("$ " + price.toFixed(2));
+        if (costOfSize !== null ) {
+            $("#doughtotal").text($("input[name='optDough']:checked").val());
+            $("#sizetotal").text(Number(costOfSize));
+            $("#cheesetotal").text(Number(costOfCheese));
+            $("#saucetotal").text(Number(costOfSauce));
+            $("#toppingtotal").text(toppingEa.slice(0, toppingEa.length - 2));
+        }
 
-    }
+    };
 
     // DROP DOWN SIZE LIST
     let dropdownSizeList;
@@ -268,11 +275,11 @@ $(function() {
     // BUILDING PIZZA STEP VALIDATION
     // let buildingPizza;
     function buildingPizza() {
-    let doughType = $("input[name='Dough-option']:selected");
+    let doughType = $("input[name='Dough-option']").val();
     let pizzaSize = $("#sizeoption").val();
     let cheeseOp = $("$cheeseoption").val();
     let sauceOp = $("#sauceoption").val();
-    let toppingOp = $("input[name='topping']:checked");
+    let toppingOp = $("input[name='topping']");
         if ( doughType === null || pizzaSize === null) {
             cheeseOp.prop("disabled", true);
             sauceOp.prop("disabled", true);
@@ -300,8 +307,7 @@ $(function() {
         let pizzadough = $("input[name='Dough-option']:checked").val();
         let size = $("select#sizeoption option:selected").text();
         let cheese = $("select#cheeseoption option:selected").text();
-        let sauce = $("select#sauceoption option:selected").text();
-   
+        let sauce = $("select#sauceoption option:selected").text();   
         let pizzatopping = new Array();
         $("input[name='topping']:checked").each(function() {
                pizzatopping.push($(this).val());   
@@ -356,11 +362,10 @@ $(function() {
         // ORDER FORM UPDATE
         let updateform;
         $("input[name='Dough-option']").change(function() {
-            $('select#sizeoption').removeClass("disabled");
-
-            if ($('this').is('selected')) {
-                dropdownSizeList();
-            }
+            window.console.log($(this).val());
+            dropdownSizeList($(this).val());
+            totalPrice();
+            
         });
 
         
@@ -380,7 +385,7 @@ $(function() {
        
       $('input[type="checkbox"]').click(function() {
           
-        if ($('this').is(':checked')) 
+        if ($(this).is(':checked')) 
             { 
                 document.getElementById('secondaryfirstName').value=document. 
                         getElementById('primaryfirstName').value;
@@ -391,9 +396,9 @@ $(function() {
                 document.getElementById('secondaryaddress2').value=document. 
                         getElementById('primaryaddress2').value; 
                 document.getElementById('secondarycity').value=document. 
-                        getElementById('primarystate').value; 
+                        getElementById('primarycity').value; 
                 document.getElementById('secondarystate').value=document. 
-                        getElementById('primarycity').value;  
+                        getElementById('primarystate').value;  
                 document.getElementById('secondaryzip').value=document. 
                         getElementById('primaryzip').value 
             } 
