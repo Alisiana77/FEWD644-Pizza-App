@@ -1,0 +1,508 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <title>Mama Celestes' Pizza Ordering App</title>
+
+    <!-- Bootstrap core CSS -->
+    <!--<link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">      
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!--MOBILE CSS -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"> 
+
+    <!-- Custom styles -->    
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/form-validation.js"></script>
+   <!-- <script type="text/javascript" src="js/sticky-sidebar.js"></script>
+    <script src="js/jquery.sticky-sidebar.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#sidebar').stickySidebar({
+          topSpacing: 60,
+          bottomSpacing: 60
+        });
+
+        });
+        
+      </script>-->
+
+
+  </head>
+  <body >
+  <div class="container">
+    <!-- JUMBOTRON -->
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              
+              
+            </div>
+          </div>
+    <!-- MAMA CELESTE LOGO -->   
+        
+        <div class="py-5 text-center">
+            
+            <h1><span class="text-muted"><img id="mamac" src="img/mamaceleste.png"></span> MAMA CELESTE</h1>
+            <h2 style="font-weight:bold; font-family: 'Rock Salt', cursive;">Start Order Your Pizza Here!</h2>
+            <p class="lead">Easy 5 steps to build your own delicious pizza. </p>
+        </div>
+
+  <!-- YOUR CART START HERE-->
+    <div class="row">
+        
+        <div class="col-md-4 order-md-2 mb-4 sidebar">
+           
+            <div class="sidebar__inner" id="sidebar">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Your cart </span>
+                    
+                    <span class="badge badge-secondary badge-pill"id="ordertotal">0</span>
+                </h4>
+                <span class="text-muted" id="emptycart"><h6> *No items selected</h6></span>
+        
+                <ul class="list-group mb-3">
+                    <li class="list-group-item ">
+                    <div class="d-flex justify-content-between lh-condensed" id="first-item">
+                        <h5 class="my-0">Your item</h5>
+                        <span></span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between lh-condensed" >
+                        <h6 class="my-0">Dough:</h6>
+                        <span id="doughtype"></span>
+                    </div>
+                    <span class="text-muted" id="doughtotal">$0</span>
+                    <div class="d-flex justify-content-between lh-condensed" >
+                        <h6 class="my-0">Size:</h6>
+                        <span id="sizechoice"></span>
+                    </div>
+                    <span class="text-muted" id="sizetotal">$0</span>
+                    <div class="d-flex justify-content-between lh-condensed" >
+                        <h6 class="my-0">Cheese:</h6>
+                        <span id="cheesechoice"></span>
+                    </div>
+                    <span class="text-muted" id="cheesetotal">$0</span>
+                    <div class="d-flex justify-content-between lh-condensed" >
+                        <h6 class="my-0">Sauce:</h6>
+                        <span id="saucechoice"></span>
+                    </div>
+                    <span class="text-muted" id="saucetotal">$0</span>
+                    <div class="d-flex justify-content-between lh-condensed" >
+                        <h6 class="my-0">Topping:</h6>
+                        <span id="toppingchoice"></span>
+                    </div>
+                    <span class="text-muted" id="toppingtotal">$0</span>
+
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong id="ordertotal">$0</strong>
+                    </li>
+                </ul>
+        
+            </div>
+    
+            
+        </div>
+    <!-- YOUR CART END HERE-->
+
+    
+    <div class="col-md-8 order-md-1"> 
+        <!--DELIVERY ADDRESS START HERE-->
+        <div id="address-box">
+            <h4 class="mb-3">Delivery address</h4>
+            <form  id="addressform" >
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                <label for="primaryfirstName">First name</label>
+                <input type="text" class="form-control" id="primaryfirstName" placeholder="" value="" >
+                <div class="invalid-feedback">
+                    Valid first name is required.
+                </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                <label for="primarylastName">Last name</label>
+                <input type="text" class="form-control" id="primarylastName" placeholder="" value="">
+                <div class="invalid-feedback">
+                    Valid last name is required.
+                </div>
+                </div>
+            </div>
+    
+    
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="email">Email </label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                    <div class="invalid-feedback">
+                    Please enter a valid email address for shipping updates.
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phonenumber">Phone Number </label>
+                    <input type="tel" class="form-control bfh-phone" id="phonenumber" placeholder="+1 (555)555-5555" data-format="+1 (ddd) ddd-dddd">
+                    <div class="invalid-feedback">
+                    Please enter a valid phone number for shipping updates.
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="mb-3">
+                <label for="address-type">Address Type</label>
+                <select class="custom-select d-block w-100" id="address-type">
+                    <option value="">Choose...</option>
+                    <option value="house">House</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="business">Business</option>
+                    <option value="campus">Campus</option>
+                    <option value="hotel">Hotel</option>
+                    <option value="dorm">Dorm</option>
+                    <option value="other">Other</option>
+                </select>
+                <div><input type="text" class="form-control" id="otheraddress" placeholder="Add note of your other address type here."></div>
+                </div>
+                <div class="invalid-feedback">
+                    Please select a valid address type.
+                    </div>
+    
+            <div class="mb-3">
+                <label for="primaryaddress">Address</label>
+                <input type="text" class="form-control" id="primaryaddress" placeholder="1234 Main St" value="">
+                <div class="invalid-feedback">
+                Please enter your shipping address.
+                </div>
+            </div>
+    
+            <div class="mb-3">
+                <label for="primaryaddress2">Address 2 <span class="text-muted">(Optional)</span></label>
+                <input type="text" class="form-control" id="primaryaddress2" placeholder="Apartment or suite" value="">
+            </div>
+    
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                <label for="primarycity" >City</label>   
+                <input type="text" class="form-control" id="primarycity" placeholder="San Diego">
+                <div class="invalid-feedback">
+                    Please select a valid city.
+                </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                <label for="primarystate">State</label>
+                <input type="text" class="form-control" id="primarystate" placeholder="AA">
+
+                <div class="invalid-feedback">
+                    Please provide a valid state.
+                </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                <label for="primaryzip">Zip</label>
+                <input type="text" class="form-control" id="primaryzip" placeholder="55555">
+                <div class="invalid-feedback">
+                    Zip code required.
+                </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="same-address">
+                <label class="custom-control-label" for="same-address">Billing address is the same as my shipping address</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="save-info">
+                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+            </div>
+            <hr class="mb-4">
+                
+            <button class="btn btn-primary btn-lg btn-block" type="button" id="next">Next</button>
+            <hr class="mb-4">
+            </form>
+        </div>
+
+    <!-- PIZZA SELECTION START -->       
+                    
+        <div id="ordering-box">
+            <h4 class="mb-3">STEP 1 Choose Pizza Dough</h4>
+            <form  id="custom-pizza">
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="doughoption1" name="Dough-option"  value="Hand Tossed">
+                <label class="custom-control-label" for="doughoption1">Hand Tossed</label>
+            </div>
+            <div class="custom-control custom-radio ">
+                <input type="radio" class="custom-control-input" id="doughoption2" name="Dough-option"  value="Thin Crust">
+                <label class="custom-control-label" for="doughoption2">Thin Crust</label>
+                <div class="invalid-feedback">Choose one of the option.</div>                   
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="doughoption3" name="Dough-option" value="New York Style">
+                <label class="custom-control-label" for="doughoption3" >New York Style</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="doughoption4" name="Dough-option" value="Gluten Free">
+                <label class="custom-control-label" for="doughoption4" >Gluten Free</label>
+            </div>
+            <div class="invalid-feedback">
+                Selection is required.
+            </div>
+    
+    
+            <hr class="mb-4">
+    
+            <h4 class="mb-3">STEP 2 Choose Size</h4>  
+            <label for="sizeoption">Some dough have limited size option </label>
+                <select class="custom-select d-block w-100" id="sizeoption" value="" disabled>
+                <option value="">Choose...</option>
+                </select>
+                <div class="invalid-feedback">
+                    Selection is required.
+                </div>
+                <hr class="mb-4">
+    
+            <h4 class="mb-3">STEP 3 Cheese Option</h4>
+            <label for="Cheese">Select cheese type</label>
+                <select class="custom-select d-block w-100" id="cheeseoption" disabled>
+                <option value="">Choose...</option>
+                <option value="0">Light </option>
+                <option value="0" selected>Normal(default)  </option>
+                <option value="2.99">Extra +$2.99</option>
+                <option value="3.99">Double +$3.99</option>
+                </select>
+                <hr class="mb-4">
+    
+            <h4 class="mb-3">STEP 4 Sauce Option</h4>
+            <label for="sauceoption">Select sauce option</label>
+                <select class="custom-select d-block w-100" id="sauceoption" disabled>
+                <option value="0" selected>Regular Tomato </option>
+                <option value="0.99">Hearty Tomato +$.99  </option>
+                <option value="1.99">BBQ Sauce +$1.99</option>
+                
+                </select>
+                <hr class="mb-4">
+    
+            <h4 class="mb-3">STEP 5 Choose Topping ($.99 each)</h4>
+        <div class="row">
+            <div class="col-md-6 mb-3" disabled>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="topping" id="toppingoption1" value="Pepperoni">
+                        <label class="custom-control-label" for="toppingoption1">Pepperoni</label>
+                        <div class="invalid-feedback">Example invalid feedback text</div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="topping" id="toppingoption2" value="Sausage">
+                        <label class="custom-control-label" for="toppingoption2">Sausage</label>
+                        <div class="invalid-feedback">Example invalid feedback text</div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="topping"  id="toppingoption3" value="Ham">
+                        <label class="custom-control-label" for="toppingoption3">Ham</label>
+                        <div class="invalid-feedback">Example invalid feedback text</div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="topping" id="toppingoption4" value="Bacon">
+                        <label class="custom-control-label" for="toppingoption4">Bacon</label>
+                        <div class="invalid-feedback">Example invalid feedback text</div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="topping" id="toppingoption5" value="Salami">
+                        <label class="custom-control-label" for="toppingoption5">Salami</label>
+                        <div class="invalid-feedback">Example invalid feedback text</div>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="topping"  id="toppingoption6" value="Onions">
+                        <label class="custom-control-label" for="toppingoption6">Onions</label>
+                        <div class="invalid-feedback">Example invalid feedback text</div>
+                    </div>
+                </div>
+    
+                    <div class="col-md-6 mb-3" disabled>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="topping" id="toppingoption7" value="Peppers">
+                                <label class="custom-control-label" for="toppingoption7">Peppers</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="topping" id="toppingoption8" value="Pineapples">
+                                <label class="custom-control-label" for="toppingoption8">Pineapples</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="topping" id="toppingoption9" value="Olives">
+                                <label class="custom-control-label" for="toppingoption9">Olives</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="topping" id="toppingoption10" value="Jalapenos">
+                                <label class="custom-control-label" for="toppingoption10">Jalapenos</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="topping" id="toppingoption11" value="Mushrooms">
+                                <label class="custom-control-label" for="toppingoption11">Mushrooms</label>
+                            </div>
+                    </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="button" id="finishbtn">Finished Building Pizza</button>  
+            <hr class="mb-4"><br>
+            </form>
+        </div>
+        <!-- PIZZA SELECTION END -->
+        <!-- BILLING FORM START -->
+        <div id="billing-box">
+
+            <!--BILLING ADDRESS-->
+            <h4 class="mb-3">Payment Information</h4>
+            <hr class="mb-4">
+            <h4 class="mb-3">Billing address</h4>
+            <form id="billing-form">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                <label for="secondaryfirstName">First name</label>
+                <input type="text" class="form-control" id="secondaryfirstName" placeholder="" value="" >
+                <div class="invalid-feedback">
+                    Valid first name is required.
+                </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                <label for="secondarylastName">Last name</label>
+                <input type="text" class="form-control" id="secondarylastName" placeholder="" value="">
+                <div class="invalid-feedback">
+                    Valid last name is required.
+                </div>
+                </div>
+            </div>
+            
+   
+            <div class="mb-3">
+                <label for="secondaryaddress">Address</label>
+                <input type="text" class="form-control" id="secondaryaddress" placeholder="1234 Main St">
+                <div class="invalid-feedback">
+                Please enter your shipping address.
+                </div>
+            </div>
+    
+            <div class="mb-3">
+                <label for="secondaryaddress2">Address 2 <span class="text-muted">(Optional)</span></label>
+                <input type="text" class="form-control" id="secondaryaddress2" placeholder="Apartment or suite">
+            </div>
+    
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                <label for="secondarycity">City</label>
+                <select class="custom-select d-block w-100" id="secondarycity">
+                    <option value="">Choose...</option>
+                    <option>San Diego</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please select a valid city.
+                </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="secondarystate">State</label>
+                    <input type="text" class="form-control" id="secondarystate" placeholder="AA">
+    
+                    <div class="invalid-feedback">
+                        Please provide a valid state.
+                    </div>
+                    </div>
+                <div class="col-md-3 mb-3">
+                <label for="secondaryzip">Zip</label>
+                <input type="text" class="form-control" id="secondaryzip" placeholder="">
+                <div class="invalid-feedback">
+                    Zip code required.
+                </div>
+                </div>
+            </div>
+        
+            <hr class="mb-4">
+
+            <!--CREDIT CARD-->
+
+
+            <h4 class="mb-3">Payment</h4>
+    
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                <input id="visacard" name="paymentMethod" type="radio" class="custom-control-input" checked>
+                <label class="custom-control-label" for="visacard">Visa</label>
+                </div>
+                <div class="custom-control custom-radio">
+                <input id="mastercard" name="paymentMethod" type="radio" class="custom-control-input">
+                <label class="custom-control-label" for="mastercard">Master</label>
+                </div>
+                <div class="custom-control custom-radio">
+                <input id="amexcard" name="paymentMethod" type="radio" class="custom-control-input">
+                <label class="custom-control-label" for="amexcard">AmericanExpress</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                <label for="cc-name">Name on card</label>
+                <input type="text" class="form-control" id="cc-name" placeholder="">
+                <small class="text-muted">Full name as displayed on card</small>
+                <div class="invalid-feedback">
+                    Name on card is required
+                </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                <label for="cc-number">Credit card number</label>
+                <input type="text" class="form-control" id="cc-number" placeholder="">
+                <div class="invalid-feedback">
+                    Credit card number is required
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                <label for="cc-expiration">Expiration</label>
+                <input type="text" class="form-control" id="cc-expiration" placeholder="">
+                <div class="invalid-feedback">
+                    Expiration date required
+                </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                <label for="cc-cvv">CVV</label>
+                <input type="text" class="form-control" id="cc-cvv" placeholder="">
+                <div class="invalid-feedback">
+                    Security code required
+                </div>
+                </div>
+            </div>
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit" id="checkout">Place Order</button>
+            </form>
+    </div>
+    <!-- BILLING FORM END-->
+
+
+        </div>
+            
+    </div>
+   
+  </div>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2020 Mama Celeste Pizza Co.</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#">Privacy</a></li>
+      <li class="list-inline-item"><a href="#">Terms</a></li>
+      <li class="list-inline-item"><a href="#">Support</a></li>
+    </ul>
+    <a href="https://twitter.com/" class="fa fa-twitter"></a>
+    <a href="https://facebook.com/" class="fa fa-facebook"></a>
+    <a href="https://google.com/" class="fa fa-google-plus"></a>
+
+  </footer>
+</div>
+   
+    
+    
+</body>
+</html>

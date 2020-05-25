@@ -1,0 +1,56 @@
+    body {
+        background-color: rgb(240, 231, 105);
+    }
+
+    .container {
+        max-width: 960px;
+      }
+      
+      .lh-condensed { line-height: 1.25; }
+
+    #mamac {
+        width: 80px;
+        height: 80px;
+        border-radius: 50px;
+    }
+
+
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    .jumbotron {
+        background-image: url('../img/maxresdefault.png');
+        height: 300px;
+        padding-bottom: 0;
+    }
+
+    .fa {
+
+        font-size: 20pt;
+        /* Remove the underline */
+        text-decoration: none;
+        /* Dark gray color */
+        color: #444;
+        /* Extra space between icons */
+        letter-spacing: 24px;
+     }
+
+     .fa a:hover {
+         text-decoration: none;
+     }
+
+    #otheraddress {
+        height: 80px;
+    }

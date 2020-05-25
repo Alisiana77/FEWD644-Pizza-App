@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">      
+    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+</head>
+<body>
+
+    <form id="custom-pizza">
+        <h4 class="mb-3">STEP 1 Choose Pizza Dough</h4>
+
+        <div >
+            <div class="custom-control custom-radio">
+              <input id="handtossed" name="doughOption" type="radio" class="custom-control-input" value="" checked required>
+              <label class="custom-control-label" for="doughOption1">Hand Tossed</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="thincrust" name="doughOption" type="radio" class="custom-control-input" value="" required>
+              <label class="custom-control-label" for="doughOption2">Thin Crust</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="newyork" name="doughOption" type="radio" class="custom-control-input" value="" required>
+              <label class="custom-control-label" for="doughOption3">New York Style</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input id="glutenfree" name="doughOption" type="radio" class="custom-control-input" value="" required>
+                <label class="custom-control-label" for="doughOption4">Gluten Free</label>
+              </div>
+          </div>
+
+        <hr class="mb-4">
+
+        <h4 class="mb-3">STEP 2 Choose Size</h4>  
+        <label for="size">Some dough have limited size option </label>
+            <select class="custom-select d-block w-100" id="sizeoption" required>
+            <option value="">Choose...</option>
+            <option id="handtossed-s">Small $9.99</option>
+            <option id="handtossed-m">Medium $12.99</option>
+            <option id="handtossed-l">Large $14.99</option>
+            <option id="thincrust-m">Medium $11.99</option>
+            <option id="thincrust-l">Large $13.99</option>
+            <option id="newyork-l">Large $16.99</option>
+            <option id="newyork-xl">Extra Large $19.99</option>
+            <option id="glutenfree-s">Small $10.99</option>
+
+            </select>
+            <hr class="mb-4">
+
+        <h4 class="mb-3">STEP 3 Cheese Option</h4>
+        <label for="Cheese">Select cheese type</label>
+            <select class="custom-select d-block w-100" id="cheeseoption" required>
+            <option value="">Choose...</option>
+            <option id="cheese-light">Light </option>
+            <option id="cheese-default" hidden selected>Normal(default)  </option>
+            <option id="cheese-extra">Extra +$2.99</option>
+            <option id="cheese-double">Double +$3.99</option>
+            </select>
+            <hr class="mb-4">
+
+        <h4 class="mb-3">STEP 4 Sauce Option</h4>
+        <label for="Sauce">Select sauce option</label>
+            <select class="custom-select d-block w-100" id="sauceoption" required>
+            <option value="">Choose...</option>
+            <option id="sauce-regular">Regular Tomato </option>
+            <option id="sauce-hearty">Hearty Tomato +$.99  </option>
+            <option id="sauce-bbq">BBQ Sauce +$1.99</option>
+            
+            </select>
+            <hr class="mb-4">
+
+        <h4 class="mb-3">STEP 5 Choose Topping ($.99 each)</h4>
+    <div class="row">
+                <div class="col-md-5 mb-3">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="topping">
+                            <label class="custom-control-label" for="Topping1">Pepperoni</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="topping">
+                            <label class="custom-control-label" for="Topping2">Sausage</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="topping">
+                            <label class="custom-control-label" for="Topping3">Ham</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="topping">
+                            <label class="custom-control-label" for="Topping4">Bacon</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="topping">
+                            <label class="custom-control-label" for="Topping5">Salami</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="topping">
+                            <label class="custom-control-label" for="Topping6">Onions</label>
+                        </div>
+
+                </div>
+                <div class="col-md-5 mb-3">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="topping">
+                        <label class="custom-control-label" for="Topping7">Peppers</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="topping">
+                        <label class="custom-control-label" for="Topping8">Pineapples</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="topping">
+                        <label class="custom-control-label" for="Topping9">Olives</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="topping">
+                        <label class="custom-control-label" for="Topping10">Jalapenos</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="topping">
+                        <label class="custom-control-label" for="Topping11">Mushrooms</label>
+                    </div>
+            </div>
+    </div>
+    <hr class="mb-4">
+        
+        <button class="btn btn-primary btn-lg btn-block" type="submit" id="custom-pizza">Continue to Checkout</button>
+        <hr class="mb-4"><br>
+</form>
+
+    
+</body>
+</html>
