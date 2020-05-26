@@ -44,7 +44,7 @@ $(function() {
                 'use strict';
                 let validName = /^(?![\s.]+$)[a-zA-Z\s.]*$/;
                 if (value.length > 0) {
-                    return letters.test(value);
+                    return validName.test(value);
                    
                 } else {
                     return false;
@@ -57,7 +57,7 @@ $(function() {
                 'use strict';
                 let validLastName = /^(?![\s.]+$)[a-zA-Z\s.]*$/;
                 if (value.length > 0) {
-                    return letters.test(value);
+                    return validLastName.test(value);
                    
                 } else {
                     return false;
@@ -91,7 +91,7 @@ $(function() {
             //VALIDATE STATE
             function isValidState(value) {
                 let validState = /^(?![\s.]+$)[a-zA-Z\s.]*$/;
-                if (value.length > 0 || value.length <= 2) {
+                if (value.length > 0 && value.length <= 2) {
                 return validState.test(value);
                 } else {
                     return false;
@@ -102,7 +102,7 @@ $(function() {
             function isValildZip(value) {
                 let validZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
                 if (value.length > 0) {
-                    return validZip.test(zip);
+                    return validZip.test(value);
     
                 } else {
                     return false;
@@ -123,6 +123,8 @@ $(function() {
                 let city = $("#primarycity").val();
                 let state = $("#primarystate").val();
                 let zip = $('#primaryzip').val();
+                
+                
     
                 validAddress = true;
 
@@ -164,10 +166,10 @@ $(function() {
                 } 
                 if (item === undefined || item === "address-type") {
                     $("#address-type").removeClass("is-valid").removeClass("is-invalid");
-                    if (addressType !== "0" ) {
+                    if (addressType !== "" ) {
                         $("#address-type").addClass("is-valid");
                     } else {
-                            $$("#address-type").addClass("is-invalid");
+                            $("#address-type").addClass("is-invalid");
                             validAddress = false;
                         }
                 } 
@@ -210,7 +212,7 @@ $(function() {
                 if (item === undefined && validAddress === true) {
                     $("button#next").prop("disabled", false);
                 }
-   
+                return validAddress;
             };
 
 
@@ -276,14 +278,14 @@ $(function() {
         
 
     // BUILDING PIZZA STEP VALIDATION
-    // let buildingPizza;
+
     function buildingPizza() {
     let doughType = $("input[name='Dough-option']").val();
     let pizzaSize = $("#sizeoption").val();
-    let cheeseOp = $("$cheeseoption").val();
-    let sauceOp = $("#sauceoption").val();
+    let cheeseOp = $("#cheeseoption");
+    let sauceOp = $("#sauceoption");
     let toppingOp = $("input[name='topping']");
-        if ( doughType === null || pizzaSize === null) {
+        if ( doughType === "" || pizzaSize === null) {
             cheeseOp.prop("disabled", true);
             sauceOp.prop("disabled", true);
             toppingOp.each(function() {
@@ -367,6 +369,7 @@ $(function() {
         $("input[name='Dough-option']").change(function() {
             window.console.log($(this).val());
             dropdownSizeList($(this).val());
+            buildingPizza();
             totalPrice();
             
         });
@@ -389,10 +392,12 @@ $(function() {
         // CLICK NEXT TO BUILD PIZZA
         $("button#next").click (function() {    
 
-            // event.preventDefault();
+            if (validateAddressInfo() === true) {
+                // event.preventDefault();
             $("#ordering-box").show();
-            
-            
+            }
+
+           
 
         });
     
