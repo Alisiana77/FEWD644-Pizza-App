@@ -3,7 +3,7 @@
 $(function() {
     'use strict';
     
-    let totalPriceArray = [];
+   
     let i;
     let j;
     
@@ -222,16 +222,19 @@ $(function() {
         let costOfCheese = $("select#cheeseoption").val();
         let costOfSauce = $("select#sauceoption").val();
         let costofTopping;
+        let toppingEa = "";
         if (costOfSize !== null) {
             price += Number(costOfSize);
             price += Number(costOfCheese);
             price += Number(costOfSauce);
             let toppingCount = 0;
-            let toppingEa = "";
+            
             $("input[name='topping']:checked").each(function() {
                 toppingCount++;
                 toppingEa =  toppingEa + $(this).val() + ", ";
             });
+            costofTopping = 0.99 * toppingCount;
+            //window.console.log(costofTopping);
             price += 0.99 * toppingCount;
         }
         window.console.log("total = " + price);
@@ -240,10 +243,10 @@ $(function() {
         $("#ordertotal2").text("$ " + price.toFixed(2));
         if (costOfSize !== null ) {
             $("#doughtotal").text($("input[name='optDough']:checked").val());
-            $("#sizetotal").text(Number(costOfSize));
-            $("#cheesetotal").text(Number(costOfCheese));
-            $("#saucetotal").text(Number(costOfSauce));
-            $("#toppingtotal").text(toppingEa.slice(0, toppingEa.length - 2));
+            $("#sizetotal").text("$" + $("#sizeoption option:selected").val());
+            $("#cheesetotal").text("$" + $("#cheeseoption option:selected").val());
+            $("#saucetotal").text("$"+ $("#sauceoption option:selected").val());
+            $("#toppingtotal").text( "$" + costofTopping.toFixed(2) );
         }
 
     };
@@ -366,6 +369,19 @@ $(function() {
             dropdownSizeList($(this).val());
             totalPrice();
             
+        });
+
+        $("#sizeoption").change(function() {
+            totalPrice();
+        });
+        $("#cheeseoption").change(function() {
+            totalPrice();
+        });
+        $("#sauceoption").change(function() {
+            totalPrice();
+        });
+        $("#toppingoption").change(function() {
+            totalPrice();
         });
 
         
