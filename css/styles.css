@@ -51,6 +51,6 @@
          text-decoration: none;
      }
 
-    #otheraddress {
+    #otheraddress, #billingotheraddress {
         height: 80px;
     }

@@ -110,9 +110,45 @@ $(function() {
     
     
             }
+
+            //VALIDATE CREDIT CARD HOLDER NAME
+            function isValidCcName(value) {
+                let validCcName = /^(?![\s.]+$)[a-zA-Z\s.]*$/;
+                if (value.length > 0) {
+                    return validCcName.test(value);
+                   
+                } else {
+                    return false;
+                }   
+            }
+
+            //VALIDATE CC NUMBER
+            function isValidCreditCard(value) {
+                return !/^\d+$/.test(value) || (value.split('').reduce(function(sum, d, n){ 
+                    return n===(value.length-1)
+                           ? 0 
+                           : sum + parseInt((n%2)? d: [0,2,4,6,8,1,3,5,7,9][d]);
+                }, 0)) % 10 == 0;
+
+            }
+
+            //VALIDATE CVV NUMBER
+            function isValidCVV(value) {
+                let myRe = /^[0-9]{3,4}$/;
+                let myArray = myRe.exec(value);
+                if (value != myArray) {
+                    return myRe.test(value);
+                } else {
+                    return false;
+                }
+
+            }
+
+
             // FUNCTION VALIDATE 
             let     validAddress,
                     validateAddressInfo;
+                   
             validateAddressInfo = function (item){
                 let name = $('#primaryfirstName').val();
                 let lastname = $('#primarylastName').val();
@@ -215,6 +251,146 @@ $(function() {
                 return validAddress;
             };
 
+            // VALIDATE BILLING INFO
+           
+            let validBilling,
+                validateBillingInfo;
+
+             validateBillingInfo = function(item) {
+                let billingName = $('#secondaryfirstName').val();
+                let bilingLastname = $('#secondarylastName').val();
+                let billingAddressType = $('#billingaddress-type').val();
+                let billingCity = $('#secondarycity').val();
+                let billingState = $('#secondarystate').val();
+                let billingZip = $('#secondaryzip').val();
+                let cardHolder = $('#cc-name').val();
+                let ccCardNum  = $('#cc-number').val();
+                let expMonth = $('#cc-month').val();
+                let expYear = $('#cc-year').val();
+                let cvvCode = $('#cc-cvv').val();
+                
+                validBilling = true;
+
+                if (item === undefined || item === "secondaryfirstName") {
+                    $("#secondaryfirstName").removeClass("is-valid").removeClass("is-invalid");
+                    if (isValidCcName(billingName)) $("#secondaryfirstName").addClass("is-valid");
+                    else {
+                      $("#secondaryfirstName").addClass("is-invalid");
+                      billingValid = false;
+                    }
+                  }
+
+                if (item === undefined || item === "secondarylastName") {
+                    $("#secondarylastName").removeClass("is-valid").removeClass("is-invalid");
+                    if (isValidCcName(bilingLastname)) {
+                        $("#secondarylastName").addClass("is-valid");
+                    } else {
+                            $("#secondarylastName").addClass("is-invalid");
+                            validAddress = false;
+                        }
+                } 
+
+                if (item === undefined || item === "billingaddress-type") {
+                    $("#billingaddress-type").removeClass("is-valid").removeClass("is-invalid");
+                    if (billingAddressType !== "") {
+                        $("#billingaddress-type").addClass("is-valid");
+                    } else {
+                            $("#billingaddress-type").addClass("is-invalid");
+                            validAddress = false;
+                        }
+                } 
+
+                if (item === undefined || item === "secondarycity") {
+                    $("#secondarycity").removeClass("is-valid").removeClass("is-invalid");
+                    if (isValidName(billingCity)) {
+                        $("#secondaryaddress2").addClass("is-valid");
+                    } else {
+                            $("#secondaryaddress2").addClass("is-invalid");
+                            validAddress = false;
+                        }
+                } 
+
+                if (item === undefined || item === "secondarystate") {
+                    $("#secondarystate").removeClass("is-valid").removeClass("is-invalid");
+                    if (isValidState(billingState)) {
+                        $("#primarystate").addClass("is-valid");
+                    } else {
+                        $("#primarystate").addClass("is-invalid");
+                            validAddress = false;
+                        }
+                } 
+                if (item === undefined || item === "secondaryzip") {
+                    $("#secondaryzip").removeClass("is-valid").removeClass("is-invalid");
+                    if (isValildZip(billingZip)) {
+                        $("#primaryzip").addClass("is-valid");
+                    } else {
+                        $("#primaryzip").addClass("is-invalid");
+                            validAddress = false;
+                        }
+                } 
+
+                if (item === undefined || item === "cc-name") {
+                    $("#cc-name").removeClass("is-valid").removeClass("is-invalid");
+                    if (isValidName(cardHolder)) $("#secondaryfirstName").addClass("is-valid");
+                    else {
+                      $("#secondaryfirstName").addClass("is-invalid");
+                      billingValid = false;
+                    }
+
+                }
+
+                if (item === undefined || item === "cc-number") {
+                    $("#cc-number").removeClass("is-valid").removeClass("is-invalid");
+                    if (isValidCreditCard(ccCardNum )) $("#cc-number").addClass("is-valid");
+                    else {
+                      $("#cc-number").addClass("is-invalid");
+                      billingValid = false;
+                    }
+
+                }
+
+                
+                if (item === undefined || item === "cc-month") {
+                    $("#cc-month").removeClass("is-valid").removeClass("is-invalid");
+                    if (expMonth !== "" ) {
+                        $("#address-type").addClass("is-valid");
+                    } else {
+                            $("#address-type").addClass("is-invalid");
+                            validAddress = false;
+                        }
+                } 
+
+                if (item === undefined || item === "cc-year") {
+                    $("#cc-year").removeClass("is-valid").removeClass("is-invalid");
+                    if (expYear  !== "" ) {
+                        $("#cc-year").addClass("is-valid");
+                    } else {
+                            $("#cc-year").addClass("is-invalid");
+                            validAddress = false;
+                        }
+                } 
+
+                if (item === undefined || item === "cc-cvv") {
+                    $("#cc-cvv").removeClass("is-valid").removeClass("is-invalid");
+                    if (isValidCVV(cvvCode))  $("#cc-cvv").addClass("is-valid");
+                     else {
+                            $("#cc-cvv").addClass("is-invalid");
+                            validAddress = false;
+                        }
+                } 
+
+
+                if (item === undefined && validBilling === true) {
+                    $("button#checkout").prop("disabled", false);
+                }
+
+
+
+                return validBilling;
+
+                
+
+            };
 
     //PIZZA PRICE CALCULATION
     function totalPrice () {
@@ -338,6 +514,7 @@ $(function() {
             window.console.log(strToppings);
             $("#billing-box").show();
             $("span#emptycart").hide();
+            $("#ordering-box").hide();
 
         } else {
             return false;
@@ -352,16 +529,31 @@ $(function() {
         $("#ordering-box").hide();
         $("#billing-box").hide();
         $("input#otheraddress").hide();
+        $("input#billingotheraddress").hide();
 
         $("select#address-type").change(function() {
             let otherAddress = $("select#address-type option:selected").val();
         if( otherAddress === "other") {
             $("input#otheraddress").slideDown("slow");
         } else {
+            $("input#otheraddress").hide();
             return false;
         }
 
         });
+
+        $("select#billingaddress-type").change(function() {
+            let billingOtherAddress = $("select#billingaddress-type option:selected").val();
+        if( billingOtherAddress === "other") {
+            $("input#billingotheraddress").show();
+        } else {
+            $("input#billingotheraddress").hide();
+            return false;
+        }
+
+        });
+
+
 
         
         // ORDER FORM UPDATE
@@ -375,6 +567,7 @@ $(function() {
         });
 
         $("#sizeoption").change(function() {
+            buildingPizza();
             totalPrice();
         });
         $("#cheeseoption").change(function() {
@@ -395,16 +588,23 @@ $(function() {
             if (validateAddressInfo() === true) {
                 // event.preventDefault();
             $("#ordering-box").show();
+            $('#address-box').hide();
             }
 
            
+
+        });
+
+        $("button#checkout").click (function() {
+
+            validateBillingInfo();
 
         });
     
 
       // AUTOFILL IF USE SAME ADDRESS 
        
-      $('input[type="checkbox"]').click(function() {
+      $('input#same-address').click(function() {
           
         if ($(this).is(':checked')) 
             { 
@@ -414,6 +614,8 @@ $(function() {
                         getElementById('primarylastName').value; 
                 document.getElementById('secondaryaddress').value=document. 
                         getElementById('primaryaddress').value; 
+                document.getElementById('billingaddress-type').value=document. 
+                        getElementById('address-type').value;
                 document.getElementById('secondaryaddress2').value=document. 
                         getElementById('primaryaddress2').value; 
                 document.getElementById('secondarycity').value=document. 
@@ -427,7 +629,8 @@ $(function() {
             else
             { 
                 document.getElementById('secondaryfirstName').value=""; 
-                document.getElementById('secondarylastName').value="";  
+                document.getElementById('secondarylastName').value=""; 
+                document.getElementById('billingaddress-type').value=""; 
                 document.getElementById('secondaryaddress').value=""; 
                 document.getElementById('secondaryaddress2').value=""; 
                 document.getElementById('secondarycity').value=""; 

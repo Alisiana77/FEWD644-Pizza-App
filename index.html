@@ -214,15 +214,8 @@
                 </div>
                 </div>
             </div>
-            <hr class="mb-4">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="same-address">
-                <label class="custom-control-label" for="same-address">Billing address is the same as my shipping address</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="save-info">
-                <label class="custom-control-label" for="save-info">Save this information for next time</label>
-            </div>
+            
+            
             <hr class="mb-4">
                 
             <button class="btn btn-primary btn-lg btn-block" type="button" id="next">Next</button>
@@ -360,6 +353,11 @@
             <!--BILLING ADDRESS-->
             <h4 class="mb-3">Payment Information</h4>
             <hr class="mb-4">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="same-address">
+                <label class="custom-control-label" for="same-address">Billing address is the same as my shipping address</label>
+            </div>
+            <hr class="mb-4">
             <h4 class="mb-3">Billing address</h4>
             <form id="billing-form">
             <div class="row">
@@ -378,7 +376,23 @@
                 </div>
                 </div>
             </div>
-            
+            <div class="mb-3">
+                <label for="billingaddress-type">Address Type</label>
+                <select class="custom-select d-block w-100" id="billingaddress-type">
+                    <option value="">Choose...</option>
+                    <option value="house">House</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="business">Business</option>
+                    <option value="campus">Campus</option>
+                    <option value="hotel">Hotel</option>
+                    <option value="dorm">Dorm</option>
+                    <option value="other">Other</option>
+                </select>
+                <div><input type="text" class="form-control" id="billingotheraddress" placeholder="Add note of your other address type here."></div>
+                </div>
+                <div class="invalid-feedback">
+                    Please select a valid address type.
+                    </div>
    
             <div class="mb-3">
                 <label for="secondaryaddress">Address</label>
@@ -459,22 +473,56 @@
                 </div>
                 </div>
             </div>
+            <h6 ><strong>Expiration</strong></h6>
             <div class="row">
+                                 
+                    <div class="col-md-3 mb-3">
+                    <label for="cc-month">Month</label>
+                    <select class="custom-select d-block w-30" id="cc-month">
+                        <option value="">Choose...</option>
+                        <option value="0">01</option>
+                        <option value="1">02</option>
+                        <option value="2">03</option>
+                        <option value="3">04</option>
+                        <option value="4">05</option>
+                        <option value="5">06</option>
+                        <option value="6">07</option>
+                        <option value="7">08</option>
+                        <option value="8">09</option>
+                        <option value="9">10</option>
+                        <option value="10">11</option>
+                        <option value="11">12</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Expiration month required
+                    </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                    <label for="cc-year">Year</label>
+                    <select class="custom-select d-block w-30" id="cc-year">
+                        <option value="">Choose...</option>
+                        <option value="0">2020</option>
+                        <option value="1">2021</option>
+                        <option value="2">2022</option>
+                        <option value="3">2023</option>
+                        <option value="4">2024</option>
+    
+                    </select>
+                    <div class="invalid-feedback">
+                        Expiration year required
+                    </div>
+                </div>
                 <div class="col-md-3 mb-3">
-                <label for="cc-expiration">Expiration</label>
-                <input type="text" class="form-control" id="cc-expiration" placeholder="">
-                <div class="invalid-feedback">
-                    Expiration date required
+                    <label for="cc-cvv">CVV</label>
+                    <input type="text" class="form-control" id="cc-cvv" placeholder="">
+                    <div class="invalid-feedback">
+                        Security code required
                 </div>
+
                 </div>
-                <div class="col-md-3 mb-3">
-                <label for="cc-cvv">CVV</label>
-                <input type="text" class="form-control" id="cc-cvv" placeholder="">
-                <div class="invalid-feedback">
-                    Security code required
-                </div>
-                </div>
+                
             </div>
+            
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="submit" id="checkout">Place Order</button>
             </form>
