@@ -124,19 +124,32 @@ $(function() {
 
             //VALIDATE CC NUMBER
             function isValidCreditCard(value) {
-                return !/^\d+$/.test(value) || (value.split('').reduce(function(sum, d, n){ 
-                    return n===(value.length-1)
-                           ? 0 
-                           : sum + parseInt((n%2)? d: [0,2,4,6,8,1,3,5,7,9][d]);
-                }, 0)) % 10 == 0;
-
-            }
+                // Accept only digits, dashes or spaces
+                  if (/[^0-9-\s]+/.test(value)) return false;
+              
+                  // The Luhn Algorithm. 
+                  let nCheck = 0, 
+                      bEven = false;
+                  value = value.replace(/\D/g, "");
+              
+                  for (let n = value.length - 1; n >= 0; n--) {
+                      let cDigit = value.charAt(n),
+                            nDigit = parseInt(cDigit, 10);
+              
+                      if (bEven && (nDigit *= 2) > 9) nDigit -= 9;
+              
+                      nCheck += nDigit;
+                      bEven = !bEven;
+                  }
+              
+                  return (nCheck % 10) == 0;
+              }
 
             //VALIDATE CVV NUMBER
             function isValidCVV(value) {
                 let myRe = /^[0-9]{3,4}$/;
-                let myArray = myRe.exec(value);
-                if (value != myArray) {
+                if (value.length > 0) {
+                    
                     return myRe.test(value);
                 } else {
                     return false;
@@ -248,6 +261,7 @@ $(function() {
                 if (item === undefined && validAddress === true) {
                     $("button#next").prop("disabled", false);
                 }
+                
                 return validAddress;
             };
 
@@ -260,6 +274,7 @@ $(function() {
                 let billingName = $('#secondaryfirstName').val();
                 let bilingLastname = $('#secondarylastName').val();
                 let billingAddressType = $('#billingaddress-type').val();
+                let billingAddress = $('#secondaryaddress').val();
                 let billingCity = $('#secondarycity').val();
                 let billingState = $('#secondarystate').val();
                 let billingZip = $('#secondaryzip').val();
@@ -276,7 +291,7 @@ $(function() {
                     if (isValidCcName(billingName)) $("#secondaryfirstName").addClass("is-valid");
                     else {
                       $("#secondaryfirstName").addClass("is-invalid");
-                      billingValid = false;
+                      validBilling = false;
                     }
                   }
 
@@ -286,7 +301,7 @@ $(function() {
                         $("#secondarylastName").addClass("is-valid");
                     } else {
                             $("#secondarylastName").addClass("is-invalid");
-                            validAddress = false;
+                            validBilling = false;
                         }
                 } 
 
@@ -296,45 +311,56 @@ $(function() {
                         $("#billingaddress-type").addClass("is-valid");
                     } else {
                             $("#billingaddress-type").addClass("is-invalid");
+                            validBilling = false;
+                        }
+                } 
+
+                if (item === undefined || item === "secondaryaddress") {
+                    $("#secondaryaddress").removeClass("is-valid").removeClass("is-invalid");
+                    if (billingAddress.length > 0) {
+                        $("#secondaryaddress").addClass("is-valid");
+                    } else {
+                        $("#secondaryaddress").addClass("is-invalid");
                             validAddress = false;
                         }
                 } 
 
+
                 if (item === undefined || item === "secondarycity") {
                     $("#secondarycity").removeClass("is-valid").removeClass("is-invalid");
                     if (isValidName(billingCity)) {
-                        $("#secondaryaddress2").addClass("is-valid");
+                        $("#secondarycity").addClass("is-valid");
                     } else {
-                            $("#secondaryaddress2").addClass("is-invalid");
-                            validAddress = false;
+                            $("#secondarycity").addClass("is-invalid");
+                            validBilling = false;
                         }
                 } 
 
                 if (item === undefined || item === "secondarystate") {
                     $("#secondarystate").removeClass("is-valid").removeClass("is-invalid");
                     if (isValidState(billingState)) {
-                        $("#primarystate").addClass("is-valid");
+                        $("#secondarystate").addClass("is-valid");
                     } else {
-                        $("#primarystate").addClass("is-invalid");
-                            validAddress = false;
+                        $("#secondarystate").addClass("is-invalid");
+                        validBilling = false;
                         }
                 } 
                 if (item === undefined || item === "secondaryzip") {
                     $("#secondaryzip").removeClass("is-valid").removeClass("is-invalid");
                     if (isValildZip(billingZip)) {
-                        $("#primaryzip").addClass("is-valid");
+                        $("#secondaryzip").addClass("is-valid");
                     } else {
-                        $("#primaryzip").addClass("is-invalid");
-                            validAddress = false;
+                        $("#secondaryzip").addClass("is-invalid");
+                        validBilling = false;
                         }
                 } 
 
                 if (item === undefined || item === "cc-name") {
                     $("#cc-name").removeClass("is-valid").removeClass("is-invalid");
-                    if (isValidName(cardHolder)) $("#secondaryfirstName").addClass("is-valid");
+                    if (isValidName(cardHolder)) $("#cc-name").addClass("is-valid");
                     else {
-                      $("#secondaryfirstName").addClass("is-invalid");
-                      billingValid = false;
+                      $("#cc-name").addClass("is-invalid");
+                      validBilling = false;
                     }
 
                 }
@@ -344,7 +370,7 @@ $(function() {
                     if (isValidCreditCard(ccCardNum )) $("#cc-number").addClass("is-valid");
                     else {
                       $("#cc-number").addClass("is-invalid");
-                      billingValid = false;
+                      validBilling = false;
                     }
 
                 }
@@ -353,10 +379,10 @@ $(function() {
                 if (item === undefined || item === "cc-month") {
                     $("#cc-month").removeClass("is-valid").removeClass("is-invalid");
                     if (expMonth !== "" ) {
-                        $("#address-type").addClass("is-valid");
+                        $("#cc-month").addClass("is-valid");
                     } else {
-                            $("#address-type").addClass("is-invalid");
-                            validAddress = false;
+                            $("#cc-month").addClass("is-invalid");
+                            validBilling = false;
                         }
                 } 
 
@@ -366,7 +392,7 @@ $(function() {
                         $("#cc-year").addClass("is-valid");
                     } else {
                             $("#cc-year").addClass("is-invalid");
-                            validAddress = false;
+                            validBilling = false;
                         }
                 } 
 
@@ -375,7 +401,7 @@ $(function() {
                     if (isValidCVV(cvvCode))  $("#cc-cvv").addClass("is-valid");
                      else {
                             $("#cc-cvv").addClass("is-invalid");
-                            validAddress = false;
+                            validBilling = false;
                         }
                 } 
 
