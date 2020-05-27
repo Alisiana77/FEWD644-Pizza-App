@@ -123,37 +123,61 @@ $(function() {
             }
 
             //VALIDATE CC NUMBER
-            function isValidCreditCard(value) {
-                // Accept only digits, dashes or spaces
-                  if (/[^0-9-\s]+/.test(value)) return false;
-              
-                  // The Luhn Algorithm. 
-                  let nCheck = 0, 
-                      bEven = false;
-                  value = value.replace(/\D/g, "");
-              
-                  for (let n = value.length - 1; n >= 0; n--) {
-                      let cDigit = value.charAt(n),
-                            nDigit = parseInt(cDigit, 10);
-              
-                      if (bEven && (nDigit *= 2) > 9) nDigit -= 9;
-              
-                      nCheck += nDigit;
-                      bEven = !bEven;
-                  }
-              
-                  return (nCheck % 10) == 0;
-              }
+            function isValidCreditCard(num){
 
-            //VALIDATE CVV NUMBER
-            function isValidCVV(value) {
-                let myRe = /^[0-9]{3,4}$/;
-                if (value.length > 0) {
-                    
-                    return myRe.test(value);
+                var inputNum = num.toString();
+                var sum = 0;
+                var doubleUp = false;
+            
+                /* from the right to left, double every other digit starting with the second to last digit.*/
+                for (var i = inputNum.length - 1; i >= 0; i--)
+                {
+                    var curDigit = parseInt(inputNum.charAt(i));
+            
+                    /* double every other digit starting with the second to last digit */
+                    if(doubleUp)
+                    {
+                        /* doubled number is greater than 9 than subtracted 9 */
+                        if((curDigit*2) > 9)
+                        {
+                          sum +=( curDigit*2)-9;
+                        }
+                        else
+                        {
+                          sum += curDigit*2;
+                        }
+                    }
+                    else
+                    {
+                      sum += curDigit;
+                    }
+                    var doubleUp =!doubleUp
+                }
+            
+              /* sum and divide it by 10. If the remainder equals zero, the original credit card number is valid.  */
+              return (sum % 10) == 0  ? true : false;
+            
+            };
+
+            // VALIDATE DIGIT
+            function isValidDigit(value) {
+                let digits = /^\d+$/;
+                if (value.length >= 13) {
+                    return digits.test(value);
                 } else {
                     return false;
                 }
+
+            }
+
+            //VALIDATE CVV NUMBER
+            function isValidCVV(value) {
+                let pattern = /^[0-9]{3,4}$/;
+                if (value.length > 0) {                    
+                    return pattern.test(value);
+                  } else {
+                    return false;
+                  }
 
             }
 
@@ -367,7 +391,7 @@ $(function() {
 
                 if (item === undefined || item === "cc-number") {
                     $("#cc-number").removeClass("is-valid").removeClass("is-invalid");
-                    if (isValidCreditCard(ccCardNum )) $("#cc-number").addClass("is-valid");
+                    if (isValidCreditCard(ccCardNum ) && isValidDigit(ccCardNum)) $("#cc-number").addClass("is-valid");
                     else {
                       $("#cc-number").addClass("is-invalid");
                       validBilling = false;
@@ -452,6 +476,7 @@ $(function() {
             $("#saucetotal").text("$"+ $("#sauceoption option:selected").val());
             $("#toppingtotal").text( "$" + costofTopping.toFixed(2) );
         }
+        
 
     };
 
@@ -523,21 +548,20 @@ $(function() {
         let pizzaDetails = (size + " " + pizzadough + "  " + pizzatopping  + " pizza, " + cheese + " cheese" + " with " + sauce + " sauce");        
            window.console.log(pizzaDetails);
       
-
+           $("#doughtype").append(pizzadough);
+           $("#sizechoice").append(size);
+           $("#cheesechoice").append(cheese);
+           $("#saucechoice").append(sauce);
+           let strToppings = "";
+           for(i = 0; i < pizzatopping.length; i++) {
+               strToppings += pizzatopping[i] + " ";
+           } 
+           $("#toppingchoice").append(strToppings);   
 
 
         let order = confirm("Finished your order?");
         if (order === true ) {
-            $("#doughtype").append(pizzadough);
-            $("#sizechoice").append(size);
-            $("#cheesechoice").append(cheese);
-            $("#saucechoice").append(sauce);
-            let strToppings = "";
-            for(i = 0; i < pizzatopping.length; i++) {
-                strToppings += pizzatopping[i] + " ";
-            } 
-            $("#toppingchoice").append(strToppings);
-            window.console.log(strToppings);
+
             $("#billing-box").show();
             $("span#emptycart").hide();
             $("#ordering-box").hide();
