@@ -45,9 +45,10 @@
             <p class="lead">Easy 5 steps to build your own delicious pizza. </p>
         </div>
 
-  <!-- YOUR CART START HERE-->
+  
     <div class="row">
-        
+        <!--SIDE BAR-->
+        <!-- YOUR CART START HERE-->
         <div class="col-md-4 order-md-2 mb-4 sidebar" id="bar-fixed">
            
             <div class="sidebar__inner" id="sidebar">
@@ -102,11 +103,12 @@
     
             
         </div>
-    <!-- YOUR CART END HERE-->
+        <!-- YOUR CART END HERE-->
+        <!--SIDE BAR-->
 
-    
-    <div class="col-md-8 order-md-1"> 
-        <!--DELIVERY ADDRESS START HERE-->
+        <!-- MAIN BAR-->
+        <div class="col-md-8 order-md-1">  
+        <!--DELIVERY ADDRESS START HERE-->       
         <div id="address-box">
             <h4 class="mb-3">Delivery address</h4>
             <form  id="addressform" >
@@ -210,9 +212,9 @@
             <hr class="mb-4">
             </form>
         </div>
+        <!--DELIVERY ADDRESS END HERE-->
 
-    <!-- PIZZA SELECTION START -->       
-                    
+        <!-- PIZZA SELECTION START -->                           
         <div id="ordering-box">
             <h4 class="mb-3">STEP 1 Choose Pizza Dough</h4>
             <form  id="custom-pizza">
@@ -335,6 +337,7 @@
             </form>
         </div>
         <!-- PIZZA SELECTION END -->
+
         <!-- BILLING FORM START -->
         <div id="billing-box">
 
@@ -364,23 +367,6 @@
                 </div>
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="billingaddress-type">Address Type</label>
-                <select class="custom-select d-block w-100" id="billingaddress-type">
-                    <option value="">Choose...</option>
-                    <option value="house">House</option>
-                    <option value="apartment">Apartment</option>
-                    <option value="business">Business</option>
-                    <option value="campus">Campus</option>
-                    <option value="hotel">Hotel</option>
-                    <option value="dorm">Dorm</option>
-                    <option value="other">Other</option>
-                </select>
-                <div><input type="text" class="form-control" id="billingotheraddress" placeholder="Add note of your other address type here."></div>
-                </div>
-                <div class="invalid-feedback">
-                    Please select a valid address type.
-                    </div>
    
             <div class="mb-3">
                 <label for="secondaryaddress">Address</label>
@@ -397,14 +383,11 @@
     
             <div class="row">
                 <div class="col-md-5 mb-3">
-                <label for="secondarycity">City</label>
-                <select class="custom-select d-block w-100" id="secondarycity">
-                    <option value="">Choose...</option>
-                    <option>San Diego</option>
-                </select>
-                <div class="invalid-feedback">
-                    Please select a valid city.
-                </div>
+                    <label for="secondarycity" >City</label>   
+                    <input type="text" class="form-control" id="secondarycity" placeholder="San Diego">
+                    <div class="invalid-feedback">
+                        Please select a valid city.
+                    </div>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="secondarystate">State</label>
@@ -430,20 +413,6 @@
 
             <h4 class="mb-3">Payment</h4>
     
-            <div class="d-block my-3">
-                <div class="custom-control custom-radio">
-                <input id="visacard" name="paymentMethod" type="radio" class="custom-control-input" checked>
-                <label class="custom-control-label" for="visacard">Visa</label>
-                </div>
-                <div class="custom-control custom-radio">
-                <input id="mastercard" name="paymentMethod" type="radio" class="custom-control-input">
-                <label class="custom-control-label" for="mastercard">Master</label>
-                </div>
-                <div class="custom-control custom-radio">
-                <input id="amexcard" name="paymentMethod" type="radio" class="custom-control-input">
-                <label class="custom-control-label" for="amexcard">AmericanExpress</label>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                 <label for="cc-name">Name on card</label>
@@ -456,6 +425,7 @@
                 <div class="col-md-6 mb-3">
                 <label for="cc-number">Credit card number</label>
                 <input type="text" class="form-control" id="cc-number" placeholder="">
+                <small class="text-muted" id="cc-type"></small>
                 <div class="invalid-feedback">
                     Credit card number is required. Or the number you entered is invalid. 
                 </div>
@@ -481,6 +451,7 @@
                         <option value="10">11</option>
                         <option value="11">12</option>
                     </select>
+                    <small class="text-muted" id="expmonth"></small>
                     <div class="invalid-feedback">
                         Expiration month required
                     </div>
@@ -489,13 +460,14 @@
                     <label for="cc-year">Year</label>
                     <select class="custom-select d-block w-30" id="cc-year">
                         <option value="">Choose...</option>
-                        <option value="0">2020</option>
-                        <option value="1">2021</option>
-                        <option value="2">2022</option>
-                        <option value="3">2023</option>
-                        <option value="4">2024</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
     
                     </select>
+                    <small class="text-muted" id="expyear"></small>
                     <div class="invalid-feedback">
                         Expiration year required
                     </div>
@@ -514,15 +486,28 @@
             <hr class="mb-4">
             <button class="btn btn-primary btn-lg btn-block" type="button" id="checkout">Place Order</button>
             </form>
-    </div>
-    <!-- BILLING FORM END-->
+        </div>
+        <!-- BILLING FORM END-->
 
 
         </div>
-            
+        <!-- MAIN BAR-->    
     </div>
+
+    <div class="py-5 text-center" id="orderConfirm">
+            
+        <h2 style="font-weight:bold; font-family: 'Rock Salt', cursive;">Thank you for your order!</h2>
+        <p class="lead">Your order#1234 will arrive shortly. </p>
+        <div></div>
+    </div>
+    
    
   </div>
+
+ 
+
+
+</div>
 
   <footer class="my-5 pt-5 text-muted text-center text-small">
     <p class="mb-1">&copy; 2020 Mama Celeste Pizza Co.</p>

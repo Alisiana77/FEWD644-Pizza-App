@@ -170,6 +170,53 @@ $(function() {
 
             }
 
+            // VALIDATE VISA CARD
+            function isValidVisa(inputtxt) {
+                let cardno = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+               // window.console.log(inputtxt);
+                if(inputtxt.match(cardno))
+                        {
+                    return true;
+                        }
+                    else
+                        {
+                        // alert("Not a valid Visa credit card number!");
+                        return false;
+                        }
+                }
+
+
+            // VALIDATE MASTER CARD
+            function isValidMaster(inputtxt) {
+                let cardno = /^(?:5[1-5][0-9]{14})$/;
+                if(inputtxt.match(cardno))
+                        {
+                    return true;
+                        }
+                    else
+                        {
+                       // alert("Not a valid Mastercard number!");
+                        return false;
+                        }
+                }
+
+
+
+            // VALIDATE AMXERICANEXPRESS CARD
+            function isValidAmex(inputtxt) {
+                let cardno = /^(?:3[47][0-9]{13})$/;
+                if(inputtxt.match(cardno))
+                        {
+                    return true;
+                        }
+                    else
+                        {
+                        //alert("Not a valid Amercican Express credit card number!");
+                        return false;
+                        }
+                }
+
+
             //VALIDATE CVV NUMBER
             function isValidCVV(value) {
                 let pattern = /^[0-9]{3,4}$/;
@@ -284,6 +331,7 @@ $(function() {
                 } 
                 if (item === undefined && validAddress === true) {
                     $("button#next").prop("disabled", false);
+                   
                 }
                 
                 return validAddress;
@@ -307,7 +355,7 @@ $(function() {
                 let expMonth = $('#cc-month').val();
                 let expYear = $('#cc-year').val();
                 let cvvCode = $('#cc-cvv').val();
-                
+                let validExp = true;
                 validBilling = true;
 
                 if (item === undefined || item === "secondaryfirstName") {
@@ -390,11 +438,33 @@ $(function() {
                 }
 
                 if (item === undefined || item === "cc-number") {
+
+                    // Remove class
                     $("#cc-number").removeClass("is-valid").removeClass("is-invalid");
-                    if (isValidCreditCard(ccCardNum ) && isValidDigit(ccCardNum)) $("#cc-number").addClass("is-valid");
-                    else {
+
+                    //validate card number and digits
+                    if (isValidCreditCard(ccCardNum ) && isValidDigit(ccCardNum)) {
+                        $("#cc-number").addClass("is-valid");
+                    } else {
                       $("#cc-number").addClass("is-invalid");
                       validBilling = false;
+                    }
+
+                    //Validate card type
+                    if(isValidVisa(ccCardNum) === true) {
+                        window.console.log("Visa");
+                        $("#cc-type").text("Visa");
+
+                    } else if(isValidMaster(ccCardNum) === true) {
+                        window.console.log("Master");
+                        $("#cc-type").text("Master");
+
+                    } else if(isValidAmex(ccCardNum) === true) {
+                        window.console.log("Amex")
+                        $("#cc-type").text("American Express");
+
+                    } else {
+                        window.console.log("Unknown card type");
                     }
 
                 }
@@ -409,6 +479,26 @@ $(function() {
                             validBilling = false;
                         }
                 } 
+
+                let today = new Date();
+                if(validExp === true) {
+                    if (ccCardNum !== null && Number(expYear) > today.getFullYear()) {
+
+                     } else  if (Number(expYear) === today.getFullYear()) { 
+                         
+                        if (Number(expMonth) >= today.getMonth()) {
+
+
+                        } else {
+                            $("#expmonth").text("Your card is expired.");
+                            $("#cc-month").removeClass("is-valid").addClass("is-invalid");
+                            $("#expyear").text("Your card is expired.")
+                            $("#cc-year").removeClass("is-valid").addClass("is-invalid");
+                        }
+                        
+                    }
+
+                }
 
                 if (item === undefined || item === "cc-year") {
                     $("#cc-year").removeClass("is-valid").removeClass("is-invalid");
@@ -431,15 +521,14 @@ $(function() {
 
 
                 if (item === undefined && validBilling === true) {
+
                     $("button#checkout").prop("disabled", false);
+                    
                 }
-
-
-
+                
                 return validBilling;
 
                 
-
             };
 
     //PIZZA PRICE CALCULATION
@@ -479,6 +568,54 @@ $(function() {
         
 
     };
+
+    // CART UPDATE
+    function cartUpdate() {
+        let pizzadough = $("input[name='Dough-option']:checked").val();
+        let size = $("select#sizeoption option:selected").text();
+        let cheese = $("select#cheeseoption option:selected").text();
+        let sauce = $("select#sauceoption option:selected").text();   
+        let pizzatopping = new Array();
+        $("input[name='topping']:checked").each(function() {
+               pizzatopping.push($(this).val());   
+           });
+        
+            let pizzaDetails = (size + " " + pizzadough + "  " + pizzatopping  + " pizza, " + cheese + " cheese" + " with " + sauce + " sauce");        
+            window.console.log(pizzaDetails);
+
+            let cheeseOp = $("#cheeseoption");
+            let sauceOp = $("#sauceoption");
+           
+            $("#doughtype").empty();
+           $("#doughtype").append(pizzadough);
+
+           $("#sizechoice").empty();
+           if (size !== "Choose...") {
+           $("#sizechoice").append(size);
+           }
+
+           $("#cheesechoice").empty();
+           if (cheeseOp.prop("disabled") === false) {
+           $("#cheesechoice").append(cheese);
+           }
+
+           $("#saucechoice").empty();
+           if (sauceOp.prop("disabled") === false) {
+           $("#saucechoice").append(sauce);
+           }
+
+
+           let strToppings = "";
+           for(i = 0; i < pizzatopping.length; i++) {
+               strToppings += pizzatopping[i] + " ";
+           } 
+           $("#toppingchoice").empty();
+           if (strToppings.length !== 0) {
+           $("#toppingchoice").append(strToppings); 
+           }
+
+    }
+
 
     // DROP DOWN SIZE LIST
     let dropdownSizeList;
@@ -536,29 +673,7 @@ $(function() {
  
     // CUSTOMIZE PIZZA 
     $("button#finishbtn").click(function() {
-        let pizzadough = $("input[name='Dough-option']:checked").val();
-        let size = $("select#sizeoption option:selected").text();
-        let cheese = $("select#cheeseoption option:selected").text();
-        let sauce = $("select#sauceoption option:selected").text();   
-        let pizzatopping = new Array();
-        $("input[name='topping']:checked").each(function() {
-               pizzatopping.push($(this).val());   
-           });
-        
-        let pizzaDetails = (size + " " + pizzadough + "  " + pizzatopping  + " pizza, " + cheese + " cheese" + " with " + sauce + " sauce");        
-           window.console.log(pizzaDetails);
-      
-           $("#doughtype").append(pizzadough);
-           $("#sizechoice").append(size);
-           $("#cheesechoice").append(cheese);
-           $("#saucechoice").append(sauce);
-           let strToppings = "";
-           for(i = 0; i < pizzatopping.length; i++) {
-               strToppings += pizzatopping[i] + " ";
-           } 
-           $("#toppingchoice").append(strToppings);   
-
-
+          
         let order = confirm("Finished your order?");
         if (order === true ) {
 
@@ -577,10 +692,10 @@ $(function() {
     // FORM VALIDATION
     window.addEventListener('load', function() {
         $("#ordering-box").hide();
-        $("#billing-box").hide();
+       // $("#billing-box").hide();
         $("input#otheraddress").hide();
         $("input#billingotheraddress").hide();
-
+        $("#orderConfirm").hide();
         $("select#address-type").change(function() {
             let otherAddress = $("select#address-type option:selected").val();
         if( otherAddress === "other") {
@@ -613,21 +728,26 @@ $(function() {
             dropdownSizeList($(this).val());
             buildingPizza();
             totalPrice();
+            cartUpdate();
             
         });
 
         $("#sizeoption").change(function() {
             buildingPizza();
             totalPrice();
+            cartUpdate();
         });
         $("#cheeseoption").change(function() {
             totalPrice();
+            cartUpdate();
         });
         $("#sauceoption").change(function() {
             totalPrice();
+            cartUpdate();
         });
         $("#toppingoption").change(function() {
             totalPrice();
+            cartUpdate();
         });
 
         
@@ -640,14 +760,16 @@ $(function() {
             $("#ordering-box").show();
             $('#address-box').hide();
             }
-
+  
            
 
         });
 
         $("button#checkout").click (function() {
 
-            validateBillingInfo();
+            if (validateBillingInfo() === true) {
+                $("#orderConfirm").show();
+            }
 
         });
     
@@ -664,8 +786,6 @@ $(function() {
                         getElementById('primarylastName').value; 
                 document.getElementById('secondaryaddress').value=document. 
                         getElementById('primaryaddress').value; 
-                document.getElementById('billingaddress-type').value=document. 
-                        getElementById('address-type').value;
                 document.getElementById('secondaryaddress2').value=document. 
                         getElementById('primaryaddress2').value; 
                 document.getElementById('secondarycity').value=document. 
@@ -679,8 +799,7 @@ $(function() {
             else
             { 
                 document.getElementById('secondaryfirstName').value=""; 
-                document.getElementById('secondarylastName').value=""; 
-                document.getElementById('billingaddress-type').value=""; 
+                document.getElementById('secondarylastName').value="";  
                 document.getElementById('secondaryaddress').value=""; 
                 document.getElementById('secondaryaddress2').value=""; 
                 document.getElementById('secondarycity').value=""; 
