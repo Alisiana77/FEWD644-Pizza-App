@@ -270,6 +270,7 @@ $(function() {
                     $("#email").removeClass("is-valid").removeClass("is-invalid");
                     if (isValidEmail(email)) {
                         $("#email").addClass("is-valid");
+                        //$("#receiptEmail").text(email);
                     } else {
                             $("#email").addClass("is-invalid");
                             validAddress = false;
@@ -693,7 +694,7 @@ $(function() {
     // FORM VALIDATION
     window.addEventListener('load', function() {
         $("#ordering-box").hide();
-       // $("#billing-box").hide();
+        $("#billing-box").hide();
         $("input#otheraddress").hide();
         $("input#billingotheraddress").hide();
         $("#orderConfirm").hide();
@@ -757,7 +758,6 @@ $(function() {
         $("button#next").click (function() {    
 
             if (validateAddressInfo() === true) {
-                // event.preventDefault();
             $("#ordering-box").show();
             $('#address-box').hide();
             }
@@ -767,11 +767,18 @@ $(function() {
         });
 
         $("button#checkout").click (function() {
+            let emailAd = $("#email").val();
             
             if ( validateBillingInfo() === true) {
-                if (validBilling === true) {
+                
+                
                 $("#orderConfirm").show();
-                }
+                $("#receiptEmail").text(emailAd);
+                $("#headtext").hide();
+                $("#billing-box").hide();
+                $("#bar-fixed").hide();
+
+                
             }
 
         });
