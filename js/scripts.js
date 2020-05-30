@@ -494,6 +494,7 @@ $(function() {
                             $("#cc-month").removeClass("is-valid").addClass("is-invalid");
                             $("#expyear").text("Your card is expired.")
                             $("#cc-year").removeClass("is-valid").addClass("is-invalid");
+                            validBilling = false;
                         }
                         
                     }
@@ -766,9 +767,11 @@ $(function() {
         });
 
         $("button#checkout").click (function() {
-
-            if (validateBillingInfo() === true) {
+            
+            if ( validateBillingInfo() === true) {
+                if (validBilling === true) {
                 $("#orderConfirm").show();
+                }
             }
 
         });
