@@ -1,9 +1,7 @@
 
 
 $(function() {
-    'use strict';
-    
-   
+    'use strict';   
     let i;
     let j;
     
@@ -180,7 +178,6 @@ $(function() {
                         }
                     else
                         {
-                        // alert("Not a valid Visa credit card number!");
                         return false;
                         }
                 }
@@ -195,7 +192,6 @@ $(function() {
                         }
                     else
                         {
-                       // alert("Not a valid Mastercard number!");
                         return false;
                         }
                 }
@@ -211,7 +207,6 @@ $(function() {
                         }
                     else
                         {
-                        //alert("Not a valid Amercican Express credit card number!");
                         return false;
                         }
                 }
@@ -270,7 +265,6 @@ $(function() {
                     $("#email").removeClass("is-valid").removeClass("is-invalid");
                     if (isValidEmail(email)) {
                         $("#email").addClass("is-valid");
-                        //$("#receiptEmail").text(email);
                     } else {
                             $("#email").addClass("is-invalid");
                             validAddress = false;
